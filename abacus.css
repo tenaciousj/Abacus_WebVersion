@@ -1,3 +1,13 @@
+body, html {
+	height: 100%;
+	overflow: hidden;
+}
+
+#scroll_wrapper {
+	height:100%;
+	overflow:hidden;
+}
+
 #rectangle_wrapper {
 	width: 990px;
 	height: 500px;
