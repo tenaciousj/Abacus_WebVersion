@@ -17,9 +17,9 @@ function init() {
       // Assign new coordinates to our object
       // obj.x = touch.pageX;
       if(obj.y < touch.pageY){
-        obj.y = 120;
+        obj.y = Math.min(touch.pageY, 120);
       } else {
-        obj.y = 50;
+        obj.y = Math.max(touch.pageY, 50);
       }
 
       // Redraw the canvas
