@@ -27,6 +27,7 @@ function init(){
   rectangle.addEventListener("touchmove", onTouchMove, false);
 
   function onTouchMove(e){
+    e.preventDefault();
     if(e.target !== e.currentTarget){
       var touch = event.targetTouches[0];
       var canvas = e.target;
