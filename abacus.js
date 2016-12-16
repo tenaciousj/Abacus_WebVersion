@@ -1,38 +1,76 @@
-var num_of_beads = 13;
+var NUM_OF_BEADS = 13;
+var NUM_OF_ROWS = 10;
 var objs = [];
-var CANVAS_WIDTH = 73;
-var CANVAS_HEIGHT = 100;
+var CANVAS_WIDTH = 60;
+var CANVAS_HEIGHT = 60;
+var PADDING_SIDES = 4;
+var PADDING_TOP = 30;
 
 function init(){
-  var canvas, obj;
+  var canvas;
   var rectangle = document.getElementById("rectangle");
-  for(var i = 0; i < num_of_beads; i++){
-    obj = {x:20, y:40, w:60, h:30};
-    objs.push(obj);
-    canvas = document.createElement("canvas");
-    canvas.width = CANVAS_WIDTH;
-    canvas.height = CANVAS_HEIGHT;
-    canvas.id = "canvas"+i;
-    rectangle.appendChild(canvas);
+
+  for(var i = 0; i < NUM_OF_ROWS; i++){
+    objs.push([]);
+    for(var j = 0; j < NUM_OF_BEADS; j++){
+      canvas = document.createElement("canvas");
+      canvas.width = CANVAS_WIDTH;
+      canvas.height = CANVAS_HEIGHT;
+      //canvas_rowNum_beadNum
+      canvas.id = "canvas_"+i+"_"+j;
+      objs[i].push({x:0, y:0, w:CANVAS_WIDTH, h:CANVAS_HEIGHT / 2});
+      rectangle.appendChild(canvas);
+    }
+  }
+
+  
+  rectangle.addEventListener("touchmove", onTouchMove, false);
+
+  function onTouchMove(e){
+    if(e.target !== e.currentTarget){
+      var touch = event.targetTouches[0];
+      var canvas = e.target;
+      var canvasIds = canvas.id.split("_");
+      var rowNum = parseInt(canvasIds[1]);
+      var beadNum = parseInt(canvasIds[2]);
+
+      xObj = beadNum*(PADDING_SIDES+CANVAS_WIDTH);
+      yObj = rowNum*(PADDING_TOP+CANVAS_HEIGHT);
+      if(detectHit(xObj, yObj, touch.pageX, touch.pageY, xObj, yObj)) {
+          // Assign new coordinates to our object
+          if(yObj > touch.pageY){
+            objs[rowNum][beadNum].y = 0;
+          }
+          else {
+            objs[rowNum][beadNum].y = 30;
+          }
+
+          // Redraw the canvas
+          draw();
+        }
+      }
+      e.stopPropagation();
   }
   draw();
 }
 
 function draw() {
-  var ctx;
-  for(var i = 0; i < num_of_beads; i++){
-    // debugger;
-    canvas = document.getElementById("canvas"+i);
-    ctx = canvas.getContext('2d');
-    
-    // Clear the canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  var ctx, canvas;
+  for(var i = 0; i < NUM_OF_ROWS; i++){
+    for(var j = 0; j < NUM_OF_BEADS; j++){
+      canvas = document.getElementById("canvas_"+i+"_"+j);
+      ctx = canvas.getContext('2d');
+      
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = 'black';
+      ctx.fillStyle = 'black';
 
-    // Draw our object in its new position
-    ctx.fillRect(objs[i].x, objs[i].y, objs[i].w, objs[i].h);
+      // Draw our object in its new position
+      ctx.fillRect(objs[i][j].x, objs[i][j].y, objs[i][j].w, objs[i][j].h);
+    }
   }
+  
 }
 
 // function init() {

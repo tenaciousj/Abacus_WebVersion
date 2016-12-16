@@ -1,5 +1,15 @@
-#rectangle {
-	width: 100%;
+#rectangle_wrapper {
+	width: 990px;
 	height: 500px;
 	background: #745131;
+}
+
+#rectangle {
+	padding-top: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+canvas {
+	padding: 4px;
 }
