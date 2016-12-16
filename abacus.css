@@ -1,11 +1,14 @@
 body, html {
-	height: 100%;
-	overflow: hidden;
+	/*height: 100%;
+	overflow: hidden;*/
+	max-width:100%;
+     max-height:100%;
+     overflow:hidden;
 }
 
 #scroll_wrapper {
-	height:100%;
-	overflow:hidden;
+	/*height:100%;
+	overflow:hidden;*/
 }
 
 #rectangle_wrapper {
