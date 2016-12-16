@@ -1,7 +1,7 @@
 function init() {
 
   // Initialize our object
-  obj = {x:50, y:50, w:70, h:70};
+  obj = {x:50, y:50, w:50, h:50};
   canvas = document.getElementById("bead");
 
   canvas.width = window.innerWidth;
@@ -15,8 +15,12 @@ function init() {
     // Is touch close enough to our object?
     if(detectHit(obj.x, obj.y, touch.pageX, touch.pageY, obj.w, obj.h)) {
       // Assign new coordinates to our object
-      obj.x = touch.pageX;
-      obj.y = touch.pageY;
+      // obj.x = touch.pageX;
+      if(obj.y < touch.pageY){
+        obj.y = 120;
+      } else {
+        obj.y = 50;
+      }
 
       // Redraw the canvas
       draw();
@@ -44,3 +48,17 @@ function draw() {
   // Draw our object in its new position
   ctx.fillRect(obj.x, obj.y, obj.w, obj.h);
 }
+
+// function allowDrop(ev) {
+//     ev.preventDefault();
+// }
+
+// function drag(ev) {
+//     ev.dataTransfer.setData("text", ev.target.id);
+// }
+
+// function drop(ev) {
+//     ev.preventDefault();
+//     var data = ev.dataTransfer.getData("text");
+//     ev.target.appendChild(document.getElementById(data));
+// }
